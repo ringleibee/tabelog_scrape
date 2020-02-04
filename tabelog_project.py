@@ -16,16 +16,18 @@ for i in range(1, 3):
 
  #店舗名取得
     titles = bs.find_all(class_="list-rst__rst-name-target")
- #店舗URL取得
-    links = bs.find_all("href")
+
+   
 
  #SQLにInsertするため、店舗名と店舗URLを結合しタプルのリスト化
     tupleOfList = []
     for contents in titles:
-
-        # 第一引数は店舗、第二引数はURL
-        content = (contents.text, contents.get('href'),)
+        
+        # 第一引数は店舗、第二引数はURL、第三引数はジャンルと駅
+        content = (contents.text, contents.get('href'), contents.find_next(class_="list-rst__area-genre").text)
         tupleOfList.append(content)
+
+        print(content)
     
  #SQlite
 dbname =  'database.db'
